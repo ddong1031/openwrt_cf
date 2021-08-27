@@ -7,7 +7,8 @@
 
 本脚本源于 GitHub：Lbingyi 以及 Paniy 和 波仔
 
-脚本命令替换为 ``wget https://raw.githubusercontent.com/ddong1031/openwrt_cf/main/cf-auto-passwall.sh``
+脚本命令替换为 
+``wget https://raw.githubusercontent.com/ddong1031/openwrt_cf/main/cf-auto-passwall.sh``
 
 视频演示地址：https://youtu.be/WzRHi9f9QKg
 
@@ -33,3 +34,8 @@
 
 3、不会请看波仔博客 https://www.v2rayssr.com/cf-auto-passwall.html
 
+## GitHub 地址借鉴 
+
+* 波仔 https://github.com/V2RaySSR/cf-auto-passwall
+
+* badafans https://github.com/badafans/better-cloudflare-ip
