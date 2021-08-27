@@ -7,6 +7,8 @@
 
 本脚本源于 GitHub：Lbingyi 以及 Paniy 和 波仔
 
+脚本命令替换为 ``wget https://raw.githubusercontent.com/ddong1031/openwrt_cf/main/cf-auto-passwall.sh``
+
 视频演示地址：https://youtu.be/WzRHi9f9QKg
 
 使用说明：加在 openwrt 上系统 计划任务里 添加定时运行，如 0 4 * * 2,4,6 bash /root/cf-auto-passwall.sh > /dev/null
