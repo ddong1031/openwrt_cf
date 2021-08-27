@@ -11,7 +11,7 @@
 
 ## 使用说明
 
-在使用passwall的基础上，太老版本不支持，看节点是否有 option tcp_node id字段，懂点基础的也可以根据id，参数等节点自行修改脚本
+在使用passwall的基础上，太老版本不支持，看节点是否有 option tcp_node id字段，懂点基础的也可以根据id，参数等节点自行修改脚本（ps:再老的版本也能修改^_^）
 
 * 输入命令 vi /etc/config/passwall 信息里面的 config global —— option tcp_node 后面的字符串，为你正在使用的自定义节点的绑定字符串 
 
