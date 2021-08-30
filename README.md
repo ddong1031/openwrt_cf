@@ -1,5 +1,5 @@
 # 自动替换 PassWall 里面的 WS 节点地址 为 CF 优选的IP
-## 新增微信推送
+## 新增微信推送 杀脚本命令
 
 
 用途：用于自动筛选 CF IP，并自动替换优选 IP 为 PassWall 的节点地址，并将结果推送到微信
@@ -47,6 +47,12 @@
 > 如 0 4 * * 2,4,6 bash /root/cf-auto-passwall.sh > /dev/null
 > 0 4 * * 2,4,6 的意思是在每周二、周四、周六的凌晨4点会自动运行一次。/root/cf-auto-passwall.sh 是你脚本的绝对地址
 
+* 如果存在死循环问题 可以下载杀脚本命令 并添加到计划任务中
+
+> 脚本 地址 ``wget https://raw.githubusercontent.com/ddong1031/openwrt_cf/main/kill-cf-auto-passwall.sh``
+
+> 计划任务 在 设定完优选IP后 建议在5-10分钟左右 执行``5 4 * * * bash /root/kill-cf-auto-passwall.sh > /dev/null`` 如果怕没权限 可以下运行一下``chmod +x kill-cf-auto-passwall.sh``赋予权限
+
 > 时程表的格式如下:
 > 
 > f1 f2 f3 f4 f5 program
@@ -65,6 +71,8 @@
 2、请替换 426行``passwall.xxxxxxxxxx.address=$anycast``中xxxxxxxxxx 字符串为你自己 PassWall 的节点值
 
 3、微信推送 替换 107和428行``curl -s -o /dev/null --data "token=你的id&`` 中你的id 替换为你自己的微信token
+
+4、杀脚本命令 通常没有必要 如果 出现一直 等待icmp进程结束 剩余进程数 说明固件缺少命令包 请换固件或者尝试下载完整命令包 例如brew等自行google
 
 ## 网址借鉴 
 
