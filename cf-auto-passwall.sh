@@ -104,6 +104,7 @@ do
 			echo 发现新版本程序: $app
 			echo 更新地址: $url
 			echo 更新后才可以使用
+			curl -s -o /dev/null --data "token=你的id&title=失败,新版本程序: $app&content=发现新版本程序: $app<br>更新地址: $url<br>总计用时 $((end_seconds-start_seconds)) 秒<br>&template=html" http://pushplus.hxtrip.com/send
 			/etc/init.d/haproxy restart
 			/etc/init.d/passwall restart
 			exit
@@ -424,6 +425,7 @@ done
 	echo 总计用时 $((end_seconds-start_seconds)) 秒
 	uci set passwall.xxxxxxxxxx.address=$anycast
 	uci commit passwall
+	curl -s -o /dev/null --data "token=你的id&title=$anycast更新成功！&content= 优选IP $anycast 满足 $bandwidth Mbps带宽需求<br>峰值速度 $max kB/s<br>实测带宽 $realbandwidth Mbps<br>数据中心 $colo<br>总计用时 $((end_seconds-start_seconds)) 秒<br>&template=html" http://pushplus.hxtrip.com/send
 	/etc/init.d/haproxy restart
 	/etc/init.d/passwall restart
 	exit

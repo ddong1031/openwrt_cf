@@ -4,7 +4,7 @@
 
 用途：用于自动筛选 CF IP，并自动替换优选 IP 为 PassWall 的节点地址，并将结果推送到微信
 
-本脚本源于 GitHub：Lbingyi 以及 Paniy 和 波仔 xiaofeng
+本脚本源于 GitHub：Lbingyi Paniy 波仔 xiaofeng
 
 ## 使用说明
 
@@ -18,6 +18,7 @@
 * 在软路由里面下载 cf-auto-passwall 脚本
 
 > ``wget https://raw.githubusercontent.com/ddong1031/openwrt_cf/main/cf-auto-passwall.sh``
+>> 已经下载用过之前脚本的请使用命令``ls``查看是否存在重名脚本，并使用``rm cf-auto-passwall.sh``删除当前重名文件后重新运行``wget https://raw.githubusercontent.com/ddong1031/openwrt_cf/main/cf-auto-passwall.sh``
 
 > 下载后，脚本的绝对地址为 /root/cf-auto-passwall.sh
 
@@ -65,10 +66,10 @@
 
 3、微信推送 替换 107和428行``curl -s -o /dev/null --data "token=你的id&`` 中你的id 替换为你自己的微信token
 
-## GitHub 地址借鉴 
+## 网址借鉴 
 
-* 波仔 https://github.com/V2RaySSR/cf-auto-passwall
+* 波仔 https://github.com/V2RaySSR/cf-auto-passwall 视频 https://www.youtube.com/watch?v=WzRHi9f9QKg
 
 * badafans https://github.com/badafans/better-cloudflare-ip
 
-* xiaofeng https://wxf2088.xyz/2582.html
+* xiaofeng https://wxf2088.xyz/2582.html 视频 https://www.youtube.com/watch?v=Cs1V0qv9UYo
