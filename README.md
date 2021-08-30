@@ -1,17 +1,14 @@
-## 自动替换 PassWall 里面的 WS 节点地址 为 CF 优选的IP
+# 自动替换 PassWall 里面的 WS 节点地址 为 CF 优选的IP
+## 新增微信推送
 
 
-用途：用于自动筛选 CF IP，并自动替换优选 IP 为 PassWall 的节点地址
+用途：用于自动筛选 CF IP，并自动替换优选 IP 为 PassWall 的节点地址，并将结果推送到微信
 
-借鉴波仔 www.v2rayssr.com （已开启禁止大陆IP访问）YouTube频道：波仔分享
-
-本脚本源于 GitHub：Lbingyi 以及 Paniy 和 波仔
- 
-视频演示地址：https://youtu.be/WzRHi9f9QKg
+本脚本源于 GitHub：Lbingyi 以及 Paniy 和 波仔 xiaofeng
 
 ## 使用说明
 
-在使用passwall的基础上，太老版本不支持，看节点是否有 option tcp_node id字段，懂点基础的也可以根据id，参数等节点自行修改脚本
+在使用passwall的基础上，太老版本不支持，看节点是否有 option tcp_node id字段，懂点基础的也可以根据id，参数等节点自行修改脚本（思路无非是通过id找节点）
 
 * 输入命令 vi /etc/config/passwall 信息里面的 config global —— option tcp_node 后面的字符串，为你正在使用的自定义节点的绑定字符串 
 
@@ -24,19 +21,29 @@
 
 > 下载后，脚本的绝对地址为 /root/cf-auto-passwall.sh
 
+* 添加微信推送
+
+>> pushplus API接口申请地址：[点击进入](https://pushplus.hxtrip.com) 微信扫码登录获取token
+
+>> ![示例](https://wxf2088.xyz/wp-content/uploads/2021/02/1612271787-3f6482561574dfa.jpg)
+
+>> 选择一对一推，记录你的微信token，稍后会在脚本中用到
+
 * 编辑该脚本
 
 >> vi cf-auto-passwall.sh
->> 更改相关的参数（默认优选带宽大小、节点相对应的字符串），并保存
+>> 更改相关的参数（默认优选带宽大小 字段 ``bandwidth``、节点相对应的字符串），并保存
+>>> passwall 节点id替换 ``xxxxxxxxxx`` 微信的token 替换最后curl开头的``你的id``
+
 
 * 软路由运行下，看看出没出错。
 
 > ``chmod +x cf-auto-passwall.sh && bash cf-auto-passwall.sh``
+> 运行完会在优选完ip之后 及时推送到微信中 此时查看passwall中的节点地址已经替换
 
 * 加在 openwrt 上系统 计划任务里 添加定时运行
 
 > 如 0 4 * * 2,4,6 bash /root/cf-auto-passwall.sh > /dev/null
-
 > 0 4 * * 2,4,6 的意思是在每周二、周四、周六的凌晨4点会自动运行一次。/root/cf-auto-passwall.sh 是你脚本的绝对地址
 
 > 时程表的格式如下:
@@ -54,12 +61,14 @@
 
 1、请在脚本中修改你期望优选 IP 的带宽大小（默认50M）
 
-2、请更改 421 行 的 xxxxxxxxxx 字符串，为你自己 PassWall 的节点值
+2、请替换 426行``passwall.xxxxxxxxxx.address=$anycast``中xxxxxxxxxx 字符串为你自己 PassWall 的节点值
 
-3、如果还不会请看视屏地址 https://youtu.be/WzRHi9f9QKg
+3、微信推送 替换 107和428行``curl -s -o /dev/null --data "token=你的id&`` 中你的id 替换为你自己的微信token
 
 ## GitHub 地址借鉴 
 
 * 波仔 https://github.com/V2RaySSR/cf-auto-passwall
 
 * badafans https://github.com/badafans/better-cloudflare-ip
+
+* xiaofeng https://wxf2088.xyz/2582.html
