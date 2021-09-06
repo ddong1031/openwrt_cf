@@ -101,13 +101,13 @@ do
 		app=$(cat data.txt | grep app= | cut -f 2- -d'=')
 		if [ "$app" != "20210825" ]
 		then
-			echo 发现新版本程序: $app
-			echo 更新地址: $url
-			echo 更新后才可以使用
-			curl -s -o /dev/null --data "token=你的id&title=失败,新版本程序: $app&content=发现新版本程序: $app<br>更新地址: $url<br>总计用时 $((end_seconds-start_seconds)) 秒<br>&template=html" http://pushplus.hxtrip.com/send
-			/etc/init.d/haproxy restart
-			/etc/init.d/passwall restart
-			exit
+			echo 当前新版本程序: $app
+			# echo 更新地址: $url
+			# echo 更新后才可以使用
+			# curl -s -o /dev/null --data "token=你的id&title=失败,新版本程序: $app&content=发现新版本程序: $app<br>更新地址: $url<br>总计用时 $((end_seconds-start_seconds)) 秒<br>&template=html" http://pushplus.hxtrip.com/send
+			# /etc/init.d/haproxy restart
+			# /etc/init.d/passwall restart
+			# exit
 		fi
 		for i in `cat data.txt | sed '1,4d'`
 		do
@@ -242,9 +242,9 @@ do
 			echo 峰值速度 $max kB/s
 			if [ $max1 -ge $max2 ]
 			then
-				curl --ipv4 --resolve service.udpfile.com:443:$first --retry 3 -s -X POST -d ''20210825-$first-$max1'' "https://service.udpfile.com?asn="$asn"&city="$city"" -o /dev/null --connect-timeout 5 --max-time 10
+				curl --ipv4 --resolve service.udpfile.com:443:$first --retry 3 -s -X POST -d ''$app-$first-$max1'' "https://service.udpfile.com?asn="$asn"&city="$city"" -o /dev/null --connect-timeout 5 --max-time 10
 			else
-				curl --ipv4 --resolve service.udpfile.com:443:$first --retry 3 -s -X POST -d ''20210825-$first-$max2'' "https://service.udpfile.com?asn="$asn"&city="$city"" -o /dev/null --connect-timeout 5 --max-time 10
+				curl --ipv4 --resolve service.udpfile.com:443:$first --retry 3 -s -X POST -d ''$app-$first-$max2'' "https://service.udpfile.com?asn="$asn"&city="$city"" -o /dev/null --connect-timeout 5 --max-time 10
 			fi
 			echo 第一次测试 $second
 			curl --resolve $domain:443:$second https://$domain/$file -o /dev/null --connect-timeout 5 --max-time 10 > log.txt 2>&1
@@ -320,9 +320,9 @@ do
 			echo 峰值速度 $max kB/s
 			if [ $max1 -ge $max2 ]
 			then
-				curl --ipv4 --resolve service.udpfile.com:443:$second --retry 3 -s -X POST -d ''20210825-$second-$max1'' "https://service.udpfile.com?asn="$asn"&city="$city"" -o /dev/null --connect-timeout 5 --max-time 10
+				curl --ipv4 --resolve service.udpfile.com:443:$second --retry 3 -s -X POST -d ''$app-$second-$max1'' "https://service.udpfile.com?asn="$asn"&city="$city"" -o /dev/null --connect-timeout 5 --max-time 10
 			else
-				curl --ipv4 --resolve service.udpfile.com:443:$second --retry 3 -s -X POST -d ''20210825-$second-$max2'' "https://service.udpfile.com?asn="$asn"&city="$city"" -o /dev/null --connect-timeout 5 --max-time 10
+				curl --ipv4 --resolve service.udpfile.com:443:$second --retry 3 -s -X POST -d ''$app-$second-$max2'' "https://service.udpfile.com?asn="$asn"&city="$city"" -o /dev/null --connect-timeout 5 --max-time 10
 			fi
 			echo 第一次测试 $third
 			curl --resolve $domain:443:$third https://$domain/$file -o /dev/null --connect-timeout 5 --max-time 10 > log.txt 2>&1
@@ -398,9 +398,9 @@ do
 			echo 峰值速度 $max kB/s
 			if [ $max1 -ge $max2 ]
 			then
-				curl --ipv4 --resolve service.udpfile.com:443:$third --retry 3 -s -X POST -d ''20210825-$third-$max1'' "https://service.udpfile.com?asn="$asn"&city="$city"" -o /dev/null --connect-timeout 5 --max-time 10
+				curl --ipv4 --resolve service.udpfile.com:443:$third --retry 3 -s -X POST -d ''$app-$third-$max1'' "https://service.udpfile.com?asn="$asn"&city="$city"" -o /dev/null --connect-timeout 5 --max-time 10
 			else
-				curl --ipv4 --resolve service.udpfile.com:443:$third --retry 3 -s -X POST -d ''20210825-$third-$max2'' "https://service.udpfile.com?asn="$asn"&city="$city"" -o /dev/null --connect-timeout 5 --max-time 10
+				curl --ipv4 --resolve service.udpfile.com:443:$third --retry 3 -s -X POST -d ''$app-$third-$max2'' "https://service.udpfile.com?asn="$asn"&city="$city"" -o /dev/null --connect-timeout 5 --max-time 10
 			fi
 		fi
 	done
@@ -413,7 +413,7 @@ done
 	start_seconds=$(date --date="$starttime" +%s)
 	end_seconds=$(date --date="$endtime" +%s)
 	clear
-	curl --ipv4 --resolve service.udpfile.com:443:$anycast --retry 3 -s -X POST -d ''20210825-$anycast-$max'' "https://service.udpfile.com?asn="$asn"&city="$city"" -o temp.txt
+	curl --ipv4 --resolve service.udpfile.com:443:$anycast --retry 3 -s -X POST -d ''$app-$anycast-$max'' "https://service.udpfile.com?asn="$asn"&city="$city"" -o temp.txt
 	publicip=$(cat temp.txt | grep publicip= | cut -f 2- -d'=')
 	colo=$(cat temp.txt | grep colo= | cut -f 2- -d'=')
 	rm -rf temp.txt
@@ -425,7 +425,7 @@ done
 	echo 总计用时 $((end_seconds-start_seconds)) 秒
 	uci set passwall.xxxxxxxxxx.address=$anycast
 	uci commit passwall
-	curl -s -o /dev/null --data "token=你的id&title=$anycast更新成功！&content= 优选IP $anycast 满足 $bandwidth Mbps带宽需求<br>峰值速度 $max kB/s<br>实测带宽 $realbandwidth Mbps<br>数据中心 $colo<br>总计用时 $((end_seconds-start_seconds)) 秒<br>&template=html" http://pushplus.hxtrip.com/send
+	curl -s -o /dev/null --data "token=你的id&title=$anycast更新成功！&content= 优选IP $anycast 满足 $bandwidth Mbps带宽需求<br>峰值速度 $max kB/s<br>实测带宽 $realbandwidth Mbps<br>数据中心 $colo<br>当前程序版本 $app <br>总计用时 $((end_seconds-start_seconds)) 秒<br>&template=html" http://pushplus.hxtrip.com/send
 	/etc/init.d/haproxy restart
 	/etc/init.d/passwall restart
 	exit
