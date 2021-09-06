@@ -70,7 +70,7 @@
 
 2、请替换 426行``passwall.xxxxxxxxxx.address=$anycast``中xxxxxxxxxx 字符串为你自己 PassWall 的节点值
 
-3、微信推送 替换 107和428行``curl -s -o /dev/null --data "token=你的id&`` 中你的id 替换为你自己的微信token
+3、微信推送 替换 428行``curl -s -o /dev/null --data "token=你的id&`` 中你的id 替换为你自己的微信token
 
 4、杀脚本命令 通常没有必要 如果 出现一直 等待icmp进程结束 剩余进程数 说明固件缺少命令包 请换固件或者尝试下载完整命令包 例如brew等自行google
 
@@ -78,6 +78,6 @@
 
 * 波仔 https://github.com/V2RaySSR/cf-auto-passwall 视频 https://www.youtube.com/watch?v=WzRHi9f9QKg
 
-* badafans https://github.com/badafans/better-cloudflare-ip
+* 脚本源 badafans https://github.com/badafans/better-cloudflare-ip
 
 * xiaofeng https://wxf2088.xyz/2582.html 视频 https://www.youtube.com/watch?v=Cs1V0qv9UYo
