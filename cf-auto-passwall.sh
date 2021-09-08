@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# 借鉴波仔，badafans脚本源 暂时去掉APP版本号比对
+# badafans脚本源 暂时去掉APP版本号比对
 ######################################################################################################
 blue(){
     echo -e "\033[34m\033[01m$1\033[0m"
@@ -38,7 +38,7 @@ do
 		declare -i m
 		declare -i n
 		declare -i per
-		rm -rf icmp temp data.txt meta.txt log.txt anycast.txt temp.txt
+		rm -rf icmp temp data.txt meta.txt log.txt anycast.txt temp.txt speed.txt
 		mkdir icmp
 		while true
 		do
@@ -50,12 +50,12 @@ do
 				do
 					if [ ! -f "meta.txt" ]
 					then
-						curl --ipv4 --resolve speed.cloudflare.com:443:$resolveip --retry 3 -v https://speed.cloudflare.com/__down>meta.txt 2>&1
+						curl --ipv4 --resolve speed.cloudflare.com:443:$resolveip --retry 3 -s https://speed.cloudflare.com/meta | sed -e 's/{//g' -e 's/}//g' -e 's/"//g' -e 's/,/\n/g'>meta.txt
 					else
-						asn=$(cat meta.txt | grep cf-meta-asn: | tr '\r' '\n' | awk '{print $3}')
-						city=$(cat meta.txt | grep cf-meta-city: | tr '\r' '\n' | awk '{print $3}')
-						latitude=$(cat meta.txt | grep cf-meta-latitude: | tr '\r' '\n' | awk '{print $3}')
-						longitude=$(cat meta.txt | grep cf-meta-longitude: | tr '\r' '\n' | awk '{print $3}')
+						asn=$(cat meta.txt | grep asn: | awk -F: '{print $2}')
+						city=$(cat meta.txt | grep city: | awk -F: '{print $2}')
+						latitude=$(cat meta.txt | grep latitude: | awk -F: '{print $2}')
+						longitude=$(cat meta.txt | grep longitude: | awk -F: '{print $2}')
 						curl --ipv4 --resolve service.udpfile.com:443:$resolveip --retry 3 "https://service.udpfile.com?asn="$asn"&city="$city"" -o data.txt -#
 						break
 					fi
@@ -66,12 +66,12 @@ do
 				do
 					if [ ! -f "meta.txt" ]
 					then
-						curl --ipv4 --retry 3 -v https://speed.cloudflare.com/__down>meta.txt 2>&1
+						curl --ipv4 --retry 3 -s https://speed.cloudflare.com/meta | sed -e 's/{//g' -e 's/}//g' -e 's/"//g' -e 's/,/\n/g'>meta.txt
 					else
-						asn=$(cat meta.txt | grep cf-meta-asn: | tr '\r' '\n' | awk '{print $3}')
-						city=$(cat meta.txt | grep cf-meta-city: | tr '\r' '\n' | awk '{print $3}')
-						latitude=$(cat meta.txt | grep cf-meta-latitude: | tr '\r' '\n' | awk '{print $3}')
-						longitude=$(cat meta.txt | grep cf-meta-longitude: | tr '\r' '\n' | awk '{print $3}')
+						asn=$(cat meta.txt | grep asn: | awk -F: '{print $2}')
+						city=$(cat meta.txt | grep city: | awk -F: '{print $2}')
+						latitude=$(cat meta.txt | grep latitude: | awk -F: '{print $2}')
+						longitude=$(cat meta.txt | grep longitude: | awk -F: '{print $2}')
 						curl --ipv4 --retry 3 "https://service.udpfile.com?asn="$asn"&city="$city"" -o data.txt -#
 						break
 					fi
@@ -86,10 +86,11 @@ do
 		file=$(cat data.txt | grep file= | cut -f 2- -d'=')
 		url=$(cat data.txt | grep url= | cut -f 2- -d'=')
 		app=$(cat data.txt | grep app= | cut -f 2- -d'=')
-		if [ "$app" != "20210825" ]
+		if [ "$app" != "20210903" ]
 		then
-			echo 当前新版本程序: $app
-			# echo 更新地址: $url
+			echo 新版本程序: $app
+			echo 更新地址: $url
+			echo 尝试替换新版本
 			# echo 更新后才可以使用
 			# curl -s -o /dev/null --data "token=你的id&title=失败,新版本程序: $app&content=发现新版本程序: $app<br>更新地址: $url<br>总计用时 $((end_seconds-start_seconds)) 秒<br>&template=html" http://pushplus.hxtrip.com/send
 			# /etc/init.d/haproxy restart
@@ -178,7 +179,6 @@ do
 			max=0
 			for i in `cat speed.txt`
 			do
-				max=$i
 				if [ $i -ge $max ]; then
 					max=$i
 				fi
@@ -214,7 +214,6 @@ do
 			max=0
 			for i in `cat speed.txt`
 			do
-				max=$i
 				if [ $i -ge $max ]; then
 					max=$i
 				fi
@@ -256,7 +255,6 @@ do
 			max=0
 			for i in `cat speed.txt`
 			do
-				max=$i
 				if [ $i -ge $max ]; then
 					max=$i
 				fi
@@ -292,7 +290,6 @@ do
 			max=0
 			for i in `cat speed.txt`
 			do
-				max=$i
 				if [ $i -ge $max ]; then
 					max=$i
 				fi
@@ -334,7 +331,6 @@ do
 			max=0
 			for i in `cat speed.txt`
 			do
-				max=$i
 				if [ $i -ge $max ]; then
 					max=$i
 				fi
@@ -370,7 +366,6 @@ do
 			max=0
 			for i in `cat speed.txt`
 			do
-				max=$i
 				if [ $i -ge $max ]; then
 					max=$i
 				fi
@@ -404,8 +399,12 @@ done
 	publicip=$(cat temp.txt | grep publicip= | cut -f 2- -d'=')
 	colo=$(cat temp.txt | grep colo= | cut -f 2- -d'=')
 	rm -rf temp.txt
+	echo $anycast>resolve.txt
 	echo 优选IP $anycast 满足 $bandwidth Mbps带宽需求
 	echo 公网IP $publicip
+	echo 自治域 AS$asn
+	echo 经纬度 $longitude,$latitude
+	echo META城市 $city
 	echo 实测带宽 $realbandwidth Mbps
 	echo 峰值速度 $max kB/s
 	echo 数据中心 $colo
