@@ -1,10 +1,10 @@
 # 自动替换 PassWall 里面的 WS 节点地址 为 CF 优选的IP
-## 新增微信推送 杀脚本命令
+## 新增微信推送 杀脚本命令 更新脚本20210106
 
 
 用途：用于自动筛选 CF IP，并自动替换优选 IP 为 PassWall 的节点地址，并将结果推送到微信
 
-本脚本源于 GitHub：Lbingyi Paniy 波仔 xiaofeng
+本脚本源于 GitHub：Lbingyi Paniy badafans
 
 ## 使用说明
 
@@ -68,16 +68,15 @@
 
 1、请在脚本中修改你期望优选 IP 的带宽大小（默认50M）
 
-2、请替换 426行``passwall.xxxxxxxxxx.address=$anycast``中xxxxxxxxxx 字符串为你自己 PassWall 的节点值
+2、请替换 51行``passwall.xxxxxxxxxx.address=$anycast``中xxxxxxxxxx 字符串为你自己 PassWall 的节点值
 
-3、微信推送 替换 428行``curl -s -o /dev/null --data "token=你的id&`` 中你的id 替换为你自己的微信token
+3、微信推送 替换 53行``curl -s -o /dev/null --data "token=你的id&`` 中你的id 替换为你自己的微信token
 
-4、杀脚本命令 通常没有必要 如果 出现一直 等待icmp进程结束 剩余进程数 说明固件缺少命令包 请换固件或者尝试下载完整命令包 例如brew等自行google
+4、修改 359 行的 menu 数值来控制操作，menu默认=1 不清除缓存，需要清除缓存请修改 menu=0，需要ipv6等请修改脚本的menu指向及相关参数
+
+5、杀脚本命令 通常没有必要 如果 出现一直 等待icmp进程结束 剩余进程数 说明固件缺少命令包 请换固件或者尝试下载完整命令包 例如brew等自行google
 
 ## 网址借鉴 
 
-* 波仔 https://github.com/V2RaySSR/cf-auto-passwall 视频 https://www.youtube.com/watch?v=WzRHi9f9QKg
-
 * 脚本源 badafans https://github.com/badafans/better-cloudflare-ip
 
-* xiaofeng https://wxf2088.xyz/2582.html 视频 https://www.youtube.com/watch?v=Cs1V0qv9UYo
