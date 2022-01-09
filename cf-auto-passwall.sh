@@ -7,8 +7,8 @@ declare -i bandwidth
 declare -i speed
 #read -p "请设置期望的带宽大小(默认0,单位 Mbps):" bandwidth
 #read -p "请设置RTT测试进程数(默认25,最大50):" tasknum
-bandwidth=5
-tasknum=25
+bandwidth=48
+tasknum=35
 if [ -z "$tasknum" ]
 then
 	tasknum=25
@@ -52,8 +52,8 @@ uci set passwall.xxxxxxxxxx.address=$anycast
 uci commit passwall
 curl -s -o /dev/null --data "token=你的id&title=$anycast更新成功！&content= 优选IP $anycast 满足 $bandwidth Mbps带宽需求<br>峰值速度 $max kB/s<br>实测带宽 $realbandwidth Mbps<br>数据中心 $colo<br>当前程序版本 $app <br>总计用时 $((end_seconds-start_seconds)) 秒<br>&template=html" http://pushplus.hxtrip.com/send
 sleep 1
-/etc/init.d/haproxy restart
-/etc/init.d/passwall restart
+/etc/init.d/haproxy start
+/etc/init.d/passwall start
 }
 
 function rtt (){
