@@ -1,6 +1,6 @@
 #!/bin/bash
 # better-cloudflare-ip
-version=20211226
+version=20220208
 
 function bettercloudflareip (){
 declare -i bandwidth
